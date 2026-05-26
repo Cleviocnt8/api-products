@@ -2,6 +2,7 @@ package main
 
 import (
 	"go-api/controller"
+	"go-api/db"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,7 +10,14 @@ import (
 func main() {
 	server := gin.Default()
 
-	productController := controller.NewProductController()
+	dbConnection, err := db.ConnectDB
+	if err != nil {
+		panic(err)
+	}
+
+	ProductUseCase := usecase.NewProductUseCase()
+	//camadas de controle
+	productController := controller.NewProductController(ProductUseCase)
 
 	server.GET("/ping", func(ctx *gin.Context){
 		ctx.JSON(200, gin.H{
