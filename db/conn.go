@@ -1,6 +1,10 @@
 package db
 
-import "fmt"
+import (
+	"database/sql"
+	"fmt"
+	_"github.com/lib/pq"
+)
 
 const (
 	host     = "localhost"

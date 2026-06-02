@@ -10,12 +10,15 @@ import (
 func main() {
 	server := gin.Default()
 
-	dbConnection, err := db.ConnectDB
+	dbConnection, err := db.ConnectDB()
 	if err != nil {
 		panic(err)
 	}
 
-	ProductUseCase := usecase.NewProductUseCase()
+	//camada de repositorio
+	ProductRepository := repository.NewproductRepository(dbConnection)
+	//camada usecase
+	ProductUseCase := usecase.NewProductUseCase(ProductRepository)
 	//camadas de controle
 	productController := controller.NewProductController(ProductUseCase)
 
